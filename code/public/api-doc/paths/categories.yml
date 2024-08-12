@@ -1,0 +1,209 @@
+#paths:
+  /categories:
+    get:
+      summary: Get all categories
+      description: Retrieve a list of categories. Supports pagination.
+      parameters:
+        - name: paginated
+          in: query
+          required: false
+          description: Whether to paginate results.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A list of categories
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CategoryCollection'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CategoryResource'
+    post:
+      summary: Create a new category
+      description: Create a new category with the provided data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryStoreRequest'
+      responses:
+        '201':
+          description: The created category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResource'
+
+  /categories/{id}:
+    get:
+      summary: Get a category by ID
+      description: Retrieve a category by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the category
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The category data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResource'
+    put:
+      summary: Update a category by ID
+      description: Update the details of an existing category by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the category
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryUpdateRequest'
+      responses:
+        '200':
+          description: The updated category data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResource'
+    delete:
+      summary: Delete a category by ID
+      description: Delete a category by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the category
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No content
+
+  /categories/slug/{slug}:
+    get:
+      summary: Get a category by slug
+      description: Retrieve a category by its slug.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: The slug of the category
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The category data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResource'
+
+  components:
+    schemas:
+      CategoryResource:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          name:
+            type: string
+            example: Electronics
+          slug:
+            type: string
+            example: electronics
+          category_id:
+            type: integer
+            nullable: true
+            example: 2
+      CategoryCollection:
+        type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/CategoryResource'
+          links:
+            type: object
+            properties:
+              first:
+                type: string
+                example: http://localhost:8000/categories?page=1
+              last:
+                type: string
+                example: http://localhost:8000/categories?page=10
+              prev:
+                type: string
+                nullable: true
+                example: null
+              next:
+                type: string
+                nullable: true
+                example: http://localhost:8000/categories?page=2
+          meta:
+            type: object
+            properties:
+              current_page:
+                type: integer
+                example: 1
+              from:
+                type: integer
+                example: 1
+              last_page:
+                type: integer
+                example: 10
+              path:
+                type: string
+                example: http://localhost:8000/categories
+              per_page:
+                type: integer
+                example: 10
+              to:
+                type: integer
+                example: 10
+              total:
+                type: integer
+                example: 100
+      CategoryStoreRequest:
+        type: object
+        properties:
+          name:
+            type: string
+            example: Electronics
+          slug:
+            type: string
+            nullable: true
+            example: electronics
+          category_id:
+            type: integer
+            nullable: true
+            example: 2
+      CategoryUpdateRequest:
+        type: object
+        properties:
+          name:
+            type: string
+            nullable: true
+            example: Electronics
+          slug:
+            type: string
+            nullable: true
+            example: electronics
+          category_id:
+            type: integer
+            nullable: true
+            example: 2
