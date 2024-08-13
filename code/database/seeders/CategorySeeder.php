@@ -13,6 +13,9 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
+        // remove any possible records
+        Category::truncate();
+
         Category::factory()->count(10)->withoutParent()->create();
         Category::factory()->count(15)->create();
     }

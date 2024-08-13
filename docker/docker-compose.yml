@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  php:
+    container_name: laravel_app
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ./../code:/var/www/html
+    depends_on:
+      - mysql_db
+    command: sh -c "php artisan migrate || echo 'Migration failed'; php artisan db:seed || echo 'Seeding failed'; apache2-foreground"
+
+  mysql_db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: blog_db
+      MYSQL_USER: zizi
+      MYSQL_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./../Database/mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:

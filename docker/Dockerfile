@@ -24,10 +24,13 @@ RUN a2enmod rewrite
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Copy the existing application directory contents to the working directory
-COPY . /var/www/html
+COPY ./code /var/www/html
 
 # Set permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Copy Apache virtual host configuration
+COPY ./docker/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 # Expose port 80
 EXPOSE 80
