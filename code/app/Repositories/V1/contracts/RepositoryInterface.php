@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Repositories\contracts;
+namespace App\Repositories\V1\contracts;
 
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
 interface RepositoryInterface

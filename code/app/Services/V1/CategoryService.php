@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\V1;
 
-use App\Models\Category;
-use App\Repositories\contracts\CategoryRepositoryInterface;
+use App\Repositories\V1\contracts\CategoryRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 

@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\V1;
 
-use App\Repositories\contracts\RepositoryInterface;
-
+use App\Repositories\V1\contracts\RepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use RuntimeException;
+use Illuminate\Support\Collection;
 
 abstract class BaseRepository implements RepositoryInterface
 {

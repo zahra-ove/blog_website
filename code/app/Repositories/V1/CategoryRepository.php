@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\V1;
 
 use App\Models\Category;
-use App\Repositories\contracts\CategoryRepositoryInterface;
+use App\Repositories\V1\contracts\CategoryRepositoryInterface;
 
 class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
