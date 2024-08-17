@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\Api\V1\CategoryStoreRequest;
 use App\Http\Requests\Api\V1\CategoryUpdateRequest;
-use App\Http\Resources\V1\CategoryCollection;
-use App\Http\Resources\V1\CategoryResource;
+use App\Http\Resources\Api\V1\CategoryCollection;
+use App\Http\Resources\Api\V1\CategoryResource;
 use App\Repositories\V1\contracts\CategoryRepositoryInterface;
 use App\Services\V1\CategoryService;
 use Illuminate\Http\JsonResponse;
