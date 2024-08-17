@@ -9,9 +9,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-
-Route::middleware(['auth:sanctum'])->prefix('v1')->as('v1:')->group(function(){
+//@TODO: add JWT authentication/authorization
+//Route::middleware(['auth:sanctum'])->prefix('v1')->as('v1:')->group(function(){
+Route::middleware([])->prefix('v1')->as('v1:')->group(function(){
     require base_path('routes/api/v1/categories.php');
+    require base_path('routes/api/v1/posts.php');
 });
 
 

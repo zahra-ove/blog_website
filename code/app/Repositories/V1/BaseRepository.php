@@ -72,8 +72,6 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function find($id, array $columns = ['*'], array $relations = [])
     {
-//        $this->instance = $this->getNewInstance();
-
         return $this->model
             ->with($relations)
             ->select($columns)
@@ -82,8 +80,6 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function findBy($field, $value, array $columns = ['*'], array $relations = [], array $appends = []): ?Model
     {
-//        $this->instance = $this->getNewInstance();
-
         return $this->model
             ->with($relations)
             ->select($columns)
@@ -93,8 +89,6 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function findByMany(array $data, array $columns = ['*'], array $relations = [])
     {
-//        $this->instance = $this->getNewInstance();
-
         foreach ($data as $key => $value) {
             $this->model->where($key, $value);
         }
@@ -107,8 +101,6 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function getWhereIn(array $ids, array $columns = ['*'], array $relations = [])
     {
-//        $this->instance = $this->getNewInstance();
-
         return $this->model
             ->with($relations)
             ->select($columns)

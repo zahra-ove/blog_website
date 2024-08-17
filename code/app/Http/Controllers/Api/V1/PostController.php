@@ -3,51 +3,54 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\PostStoreRequest;
+use App\Http\Requests\Api\V1\PostUpdateRequest;
+use App\Http\Resources\Api\V1\PostCollection;
+use App\Http\Resources\Api\V1\PostResource;
 use App\Repositories\V1\contracts\PostRepositoryInterface;
+use App\Services\V1\PostService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
-    public function __construct(protected PostRepositoryInterface $postRepository)
+    public function __construct(protected PostRepositoryInterface $postRepository,
+                                protected PostService $postService)
     {
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
+        $includes = request()->has('include') ? explode(',', request()->query('include')) : [];
+        $posts = request()->has('paginated')
+            ? $this->postRepository->paginate(relations: $includes)
+            : $this->postRepository->all(relations: $includes);
 
+        $resource = new PostCollection($posts);
+        return response()->json($resource, Response::HTTP_OK);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
-        //
+        $post = $this->postRepository->store($request->validated());
+        return response()->json($post, Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(int $id)
     {
-        //
+        $post = $this->postRepository->find($id);
+        return response()->json($post, Response::HTTP_OK);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(PostUpdateRequest $request, string $id)
     {
-        //
+        $result = $this->postService->update($id, $request->validated());
+        return response()->json($result, Response::HTTP_OK);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
+        $this->postRepository->destroy($id);
+        return response()->json('', Response::HTTP_NO_CONTENT);
     }
 }

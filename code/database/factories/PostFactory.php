@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,12 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title'        => $this->faker->words(3, true),
+            'body'         => $this->faker->realText(1000),
+            'author_id'    => User::all()->random()->id,
+            'category_id'  => Category::all()->random()->id,
+            'publish_at'   => $this->faker->dateTimeThisMonth,
+            'published_at' => $this->faker->dateTimeBetween(startDate: now()->addMonth(), endDate: now()->addYear()),
         ];
     }
 }

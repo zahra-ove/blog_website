@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\Api\V1\CategoryStoreRequest;
 use App\Http\Requests\Api\V1\CategoryUpdateRequest;
-use App\Http\Resources\Api\V1\CategoryCollection;
 use App\Http\Resources\Api\V1\CategoryResource;
 use App\Repositories\V1\contracts\CategoryRepositoryInterface;
 use App\Services\V1\CategoryService;
@@ -21,13 +20,10 @@ class CategoryController extends ApiController
     public function index(): JsonResponse
     {
         $categories = request()->has('paginated')
-            ? $this->categoryRepository->paginate(5)
+            ? $this->categoryRepository->paginate()
             : $this->categoryRepository->all();
 
-        $resource = request()->has('paginated')
-            ? new CategoryCollection($categories)
-            : CategoryResource::collection($categories);
-
+        $resource = CategoryResource::collection($categories);
         return response()->json($resource, Response::HTTP_OK);
     }
 
@@ -45,7 +41,7 @@ class CategoryController extends ApiController
 
     public function findBySlug(string $slug): JsonResponse
     {
-        $category = $this->categoryRepository->findBy('slug', $slug);
+        $category = $this->categoryRepository->findBySlug($slug);
         return response()->json($category, Response::HTTP_OK);
     }
 
