@@ -7,9 +7,10 @@ services:
       context: ../
       dockerfile: ./docker/Dockerfile
     ports:
-      - "8080:80"
+      - "${HOST_PORT}:${CONTAINER_PORT}"
     volumes:
       - ./../code:/var/www/html
+      - /var/www/html/vendor
     depends_on:
       - mysql_db
     command: sh -c "php artisan migrate || echo 'Migration failed'; php artisan db:seed || echo 'Seeding failed'; apache2-foreground"
@@ -18,12 +19,12 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: blog_db
-      MYSQL_USER: zizi
-      MYSQL_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"
+      - "${MYSQL_HOST_PORT}:${MYSQL_CONTAINER_PORT}"
     volumes:
       - ./../Database/mysql-data:/var/lib/mysql
 
