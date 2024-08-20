@@ -8,7 +8,7 @@ use App\Http\Resources\Api\V1\CommentResource;
 use App\Repositories\V1\contracts\CommentRepositoryInterface;
 use App\Services\V1\CommentService;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class CommentController extends Controller
 {

@@ -8,7 +8,7 @@ use App\Http\Resources\Api\V1\CategoryResource;
 use App\Repositories\V1\contracts\CategoryRepositoryInterface;
 use App\Services\V1\CategoryService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class CategoryController extends ApiController
@@ -41,7 +41,7 @@ class CategoryController extends ApiController
 
     public function findBySlug(string $slug): JsonResponse
     {
-        $category = $this->categoryRepository->findBySlug($slug);
+        $category = $this->categoryRepository->fiResponse::HTTP_OKndBySlug($slug);
         return response()->json($category, Response::HTTP_OK);
     }
 

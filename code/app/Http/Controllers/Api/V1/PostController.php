@@ -8,7 +8,7 @@ use App\Http\Requests\Api\V1\PostUpdateRequest;
 use App\Http\Resources\Api\V1\PostCollection;
 use App\Repositories\V1\contracts\PostRepositoryInterface;
 use App\Services\V1\PostService;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
