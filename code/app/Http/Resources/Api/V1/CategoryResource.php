@@ -9,14 +9,6 @@ class CategoryResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-//        return [
-//            'name'        => $this->name ?? '',
-//            'slug'        => $this->slug,
-//            'category_id' => $this->category_id,
-//            'parent'      => is_null($this->category_id) ?: $this->category?->name
-//        ];
-
-
         return [
             'type'          => 'categories',
             'id'            => $this->id,
@@ -27,13 +19,13 @@ class CategoryResource extends JsonResource
                 'parent'      => is_null($this->category_id) ?: $this->category?->name
             ],
             'relationships' => [
-                'comments' => CommentResource::collection($this->whenLoaded('comments')),
-                'author'   => new UserResource($this->whenLoaded('user')),
-                'post'     => new CategoryResource($this->whenLoaded('post')),
+                'parent_category'  => new CategoryResource($this->whenLoaded('category')),
+                'child_categories' => CategoryResource::collection($this->whenLoaded('categories')),
+                'posts'            => PostResource::collection($this->whenLoaded('posts')),
             ],
             'includes'      => [],
             'links'         => [
-                'self' => route('v1:comments.show', ['comment' => $this->id])
+                'self' => route('v1:categories.show', ['category' => $this->id])
             ]
         ];
     }

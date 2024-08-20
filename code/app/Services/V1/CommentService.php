@@ -14,7 +14,7 @@ class CommentService
 
     public function store(array $data): Comment
     {
-
+        //@TODO: double check the body of comment to not have any script or malicious code
     }
 
     public function update(int $id, array $data)
