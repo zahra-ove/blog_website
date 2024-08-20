@@ -31,7 +31,7 @@ class CommentController extends Controller
 
     public function store(StoreRequest $request)
     {
-        $comment = $this->commentRepository->store($request->validated());
+        $comment = $this->commentService->store($request->toDto());
         return response()->json($comment, Response::HTTP_CREATED);
     }
 
@@ -43,7 +43,7 @@ class CommentController extends Controller
 
     public function update(UpdateRequest $request, string $id)
     {
-        $result = $this->commentService->update($id, $request->validated());
+        $result = $this->commentService->update($id, $request->toDto());
         return response()->json($result, Response::HTTP_OK);
     }
 

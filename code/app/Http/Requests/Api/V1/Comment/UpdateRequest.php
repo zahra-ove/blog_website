@@ -2,27 +2,33 @@
 
 namespace App\Http\Requests\Api\V1\Comment;
 
+use App\DTO\Api\V1\CommentDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'body'       => 'nullable|string|max:10000',
+            'post_id'    => 'nullable|int|exists:posts,id',
+            'comment_id' => 'nullable|int|exists:comments,id'
         ];
+    }
+
+    public function toDto(): CommentDTO
+    {
+        return new CommentDTO(
+            body: $this->validated('body'),
+            user_id: $this->validated('user_id'),
+            post_id: $this->validated('post_id')??null,
+            comment_id: $this->validated('comment_id')
+        );
     }
 }
