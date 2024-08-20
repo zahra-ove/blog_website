@@ -4,27 +4,48 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'posts';
-    protected $fillable = ['title', 'body', 'author_id', 'category_id', 'publish_at'];
+    protected $with = ['author'];
+    protected $fillable = [
+        'title',
+        'body',
+        'author_id',
+        'category_id',
+        'publish_at'
+    ];
 
-    public function category()
+    protected $casts = [
+        'published' => 'boolean'
+    ];
+
+    protected static function booted(): void
+    {
+        static::creating(function(Post $post) {
+            $post->slug = Str::slug($post->title . '-' . $post->author?->first_name . '-' . $post->author?->last_name);
+        });
+    }
+
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    //@TODO
-    public function comments()
+    public function comments(): HasMany
     {
-    // return $this->hasMany(Comment::class);
+         return $this->hasMany(Comment::class, 'post_id');
     }
 
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
@@ -32,7 +53,6 @@ class Post extends Model
     //@TODO
     public function tags()
     {
-
     }
 
 }

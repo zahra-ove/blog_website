@@ -13,24 +13,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // temporarily disable FK check
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        if(app()->environment('local')) {
+            // temporarily disable FK check
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        User::truncate();
-        User::factory()->create([
-            'first_name' => 'Test',
-            'last_name' => 'User',
-            'username' => 'something',
-            'email' => 'test@example.com',
-        ]);
+            User::truncate();
+            User::factory()->create([
+                'first_name' => 'Test',
+                'last_name' => 'User',
+                'username' => 'something',
+                'email' => 'test@example.com',
+            ]);
 
-        // User::factory(10)->create();
-        $this->call([
-            CategorySeeder::class,
-            PostSeeder::class
-        ]);
+            $this->call([
+                CategorySeeder::class,
+                PostSeeder::class,
+                CommentSeeder::class
+            ]);
 
-        // enable FK check
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            // enable FK check
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        }
+
     }
 }

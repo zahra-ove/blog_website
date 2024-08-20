@@ -14,6 +14,7 @@ Route::get('/user', function (Request $request) {
 Route::middleware([])->prefix('v1')->as('v1:')->group(function(){
     require base_path('routes/api/v1/categories.php');
     require base_path('routes/api/v1/posts.php');
+    require base_path('routes/api/v1/comments.php');
 });
 
 

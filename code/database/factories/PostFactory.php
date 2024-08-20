@@ -20,9 +20,10 @@ class PostFactory extends Factory
     {
         return [
             'title'        => $this->faker->words(3, true),
-            'body'         => $this->faker->realText(1000),
+            'body'         => $this->faker->randomHtml(),
             'author_id'    => User::all()->random()->id,
             'category_id'  => Category::all()->random()->id,
+            'published'    => $this->faker->randomElement(['0', '1']),
             'publish_at'   => $this->faker->dateTimeThisMonth,
             'published_at' => $this->faker->dateTimeBetween(startDate: now()->addMonth(), endDate: now()->addYear()),
         ];

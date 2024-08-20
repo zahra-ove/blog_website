@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\PostStoreRequest;
 use App\Http\Requests\Api\V1\PostUpdateRequest;
 use App\Http\Resources\Api\V1\PostCollection;
-use App\Http\Resources\Api\V1\PostResource;
 use App\Repositories\V1\contracts\PostRepositoryInterface;
 use App\Services\V1\PostService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class PostController extends Controller
@@ -22,6 +20,7 @@ class PostController extends Controller
     public function index()
     {
         $includes = request()->has('include') ? explode(',', request()->query('include')) : [];
+
         $posts = request()->has('paginated')
             ? $this->postRepository->paginate(relations: $includes)
             : $this->postRepository->all(relations: $includes);
