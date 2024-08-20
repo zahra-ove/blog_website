@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\Api\V1\CategoryStoreRequest;
-use App\Http\Requests\Api\V1\CategoryUpdateRequest;
+use App\Http\Requests\Api\V1\Category\StoreRequest;
+use App\Http\Requests\Api\V1\Category\UpdateRequest;
 use App\Http\Resources\Api\V1\CategoryResource;
 use App\Repositories\V1\contracts\CategoryRepositoryInterface;
 use App\Services\V1\CategoryService;
@@ -27,7 +27,7 @@ class CategoryController extends ApiController
         return response()->json($resource, Response::HTTP_OK);
     }
 
-    public function store(CategoryStoreRequest $request): JsonResponse
+    public function store(StoreRequest $request): JsonResponse
     {
         $category = $this->categoryService->store($request->validated());
         return response()->json($category, Response::HTTP_CREATED);
@@ -41,11 +41,11 @@ class CategoryController extends ApiController
 
     public function findBySlug(string $slug): JsonResponse
     {
-        $category = $this->categoryRepository->fiResponse::HTTP_OKndBySlug($slug);
+        $category = $this->categoryRepository->findBySlug($slug);
         return response()->json($category, Response::HTTP_OK);
     }
 
-    public function update(CategoryUpdateRequest $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
         $result = $this->categoryRepository->update($id, $request->validated());
         return response()->json($result, Response::HTTP_OK);

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\Comment\StoreRequest;
+use App\Http\Requests\Api\V1\Comment\UpdateRequest;
 use App\Http\Resources\Api\V1\CommentCollection;
 use App\Http\Resources\Api\V1\CommentResource;
 use App\Repositories\V1\contracts\CommentRepositoryInterface;
@@ -27,7 +29,7 @@ class CommentController extends Controller
         return response()->json($resource, 200);
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $comment = $this->commentRepository->store($request->validated());
         return response()->json($comment, Response::HTTP_CREATED);
@@ -39,7 +41,7 @@ class CommentController extends Controller
         return response()->json($comment, Response::HTTP_OK);
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
         $result = $this->commentService->update($id, $request->validated());
         return response()->json($result, Response::HTTP_OK);
@@ -51,12 +53,12 @@ class CommentController extends Controller
         return response()->json('', Response::HTTP_NO_CONTENT);
     }
 
-    public function confirm(int $id)
+    public function confirm(int $id): bool
     {
         return $this->commentRepository->confirm($id);
     }
 
-    public function reject(int $id)
+    public function reject(int $id): bool
     {
         return $this->commentRepository->reject($id);
     }

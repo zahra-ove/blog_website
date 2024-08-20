@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests\Api\V1\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostStoreRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,8 @@ class PostStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'       => 'required|string|max:1000',
-            'body'        => 'required|string',
-            'category_id' => 'nullable|numeric|exists:categories,id',
-            'publish_at'  => 'nullable|date_format:Y-m-d H:i:s|after_or_equal:now'
+            'name'        => 'required|string|max:500',
+            'category_id' => 'nullable|numeric|exists:category,id'
         ];
     }
 }

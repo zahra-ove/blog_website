@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\PostStoreRequest;
-use App\Http\Requests\Api\V1\PostUpdateRequest;
+use App\Http\Requests\Api\V1\Post\StoreRequest;
+use App\Http\Requests\Api\V1\Post\UpdateRequest;
 use App\Http\Resources\Api\V1\PostCollection;
 use App\Repositories\V1\contracts\PostRepositoryInterface;
 use App\Services\V1\PostService;
@@ -29,7 +29,7 @@ class PostController extends Controller
         return response()->json($resource, Response::HTTP_OK);
     }
 
-    public function store(PostStoreRequest $request)
+    public function store(StoreRequest $request)
     {
         $post = $this->postRepository->store($request->validated());
         return response()->json($post, Response::HTTP_CREATED);
@@ -41,7 +41,7 @@ class PostController extends Controller
         return response()->json($post, Response::HTTP_OK);
     }
 
-    public function update(PostUpdateRequest $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
         $result = $this->postService->update($id, $request->validated());
         return response()->json($result, Response::HTTP_OK);

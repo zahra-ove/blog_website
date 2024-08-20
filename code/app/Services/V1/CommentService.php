@@ -4,11 +4,11 @@ namespace App\Services\V1;
 
 use App\Exceptions\CustomResourceException;
 use App\Models\Comment;
-use App\Repositories\V1\CommentRepository;
+use App\Repositories\V1\contracts\CommentRepositoryInterface;
 
 class CommentService
 {
-    public function __construct(protected CommentRepository $commentRepository)
+    public function __construct(protected CommentRepositoryInterface $commentRepository)
     {
     }
 

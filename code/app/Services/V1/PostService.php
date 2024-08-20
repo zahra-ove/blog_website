@@ -3,11 +3,11 @@
 namespace App\Services\V1;
 
 use App\Exceptions\CustomResourceException;
-use App\Repositories\V1\PostRepository;
+use App\Repositories\V1\contracts\PostRepositoryInterface;
 
 class PostService
 {
-    public function __construct(protected PostRepository $postRepository)
+    public function __construct(protected PostRepositoryInterface $postRepository)
     {
     }
 

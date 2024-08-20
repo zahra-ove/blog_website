@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests\Api\V1\Comment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostUpdateRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,11 +22,7 @@ class PostUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'       => 'nullable|string|max:1000',
-            'body'        => 'nullable|string',
-            'category_id' => 'nullable|numeric|exists:categories,id',
-//            'publish_at'  => 'nullable|date_format:Y-m-d H:i:s|after_or_equal:now'
-            'publish_at'  => 'nullable|after_or_equal:now'
+            //
         ];
     }
 }
