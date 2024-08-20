@@ -7,10 +7,10 @@ services:
       context: ../
       dockerfile: ./docker/Dockerfile
     ports:
-      - "${HOST_PORT}:${CONTAINER_PORT}"
+      - ${HOST_PORT}:${CONTAINER_PORT}
     volumes:
       - ./../code:/var/www/html
-      - /var/www/html/vendor
+#      - /var/www/html/vendor
     depends_on:
       - mysql_db
     command: sh -c "php artisan migrate || echo 'Migration failed'; php artisan db:seed || echo 'Seeding failed'; apache2-foreground"
@@ -24,7 +24,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "${MYSQL_HOST_PORT}:${MYSQL_CONTAINER_PORT}"
+      - ${MYSQL_HOST_PORT}:${MYSQL_CONTAINER_PORT}
     volumes:
       - ./../Database/mysql-data:/var/lib/mysql
 
