@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
@@ -13,6 +14,18 @@ class Category extends Model
 
     protected $table = 'categories';
     protected $fillable = ['name', 'slug', 'category_id'];
+
+    protected static function booted(): void
+    {
+        static::creating(fn(Category $category) => Str::slug($category->name));
+    }
+
+
+    /***************************************************************************
+     *                                                                         *
+     *                             Model Relationships                         *
+     *                                                                         *
+     ***************************************************************************/
 
     public function categories(): HasMany
     {

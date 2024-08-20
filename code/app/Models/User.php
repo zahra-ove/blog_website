@@ -34,6 +34,11 @@ class User extends Authenticatable
         ];
     }
 
+    /***************************************************************************
+     *                                                                         *
+     *                             Model Relationships                         *
+     *                                                                         *
+     ***************************************************************************/
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class, 'author_id', 'id');

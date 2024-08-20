@@ -13,6 +13,12 @@ class Comment extends Model
     use HasFactory;
     use SoftDeletes;
 
+    /***************************************************************************
+     *                                                                         *
+     *                             Model Relationships                         *
+     *                                                                         *
+     ***************************************************************************/
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

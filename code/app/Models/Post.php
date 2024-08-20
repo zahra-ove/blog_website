@@ -35,6 +35,11 @@ class Post extends Model
         });
     }
 
+    /***************************************************************************
+     *                                                                         *
+     *                             Model Relationships                         *
+     *                                                                         *
+     ***************************************************************************/
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

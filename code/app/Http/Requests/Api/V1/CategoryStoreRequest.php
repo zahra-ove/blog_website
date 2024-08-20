@@ -23,7 +23,6 @@ class CategoryStoreRequest extends FormRequest
     {
         return [
             'name'        => 'required|string|max:500',
-            'slug'        => 'nullable|string|max:500',
             'category_id' => 'nullable|numeric|exists:category,id'
         ];
     }
