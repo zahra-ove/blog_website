@@ -17,8 +17,8 @@ class UpdateRequest extends FormRequest
     {
         return [
             'body'       => 'nullable|string|max:10000',
-            'post_id'    => 'nullable|int|exists:posts,id',
-            'comment_id' => 'nullable|int|exists:comments,id'
+            'post_id'    => 'nullable|numeric|exists:posts,id',
+            'comment_id' => 'nullable|numeric|exists:comments,id'
         ];
     }
 
