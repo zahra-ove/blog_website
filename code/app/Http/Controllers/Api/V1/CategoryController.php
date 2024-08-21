@@ -45,7 +45,7 @@ class CategoryController extends ApiController
         return response()->json($category, Response::HTTP_OK);
     }
 
-    public function update(UpdateRequest $request, string $id)
+    public function update(UpdateRequest $request, string $id): JsonResponse
     {
         $result = $this->categoryRepository->update($id, $request->validated());
         return response()->json($result, Response::HTTP_OK);

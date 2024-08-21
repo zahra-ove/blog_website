@@ -9,6 +9,7 @@ use App\Http\Resources\Api\V1\CommentCollection;
 use App\Http\Resources\Api\V1\CommentResource;
 use App\Repositories\V1\contracts\CommentRepositoryInterface;
 use App\Services\V1\CommentService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +19,7 @@ class CommentController extends Controller
     {
     }
 
-    public function index()
+    public function index(): JsonResponse
     {
         $includes = request()->has('include') ? explode(',', request()->query('include')) : [];
 
@@ -29,25 +30,25 @@ class CommentController extends Controller
         return response()->json($resource, 200);
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): JsonResponse
     {
         $comment = $this->commentService->store($request->toDto());
         return response()->json($comment, Response::HTTP_CREATED);
     }
 
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
         $comment = $this->commentRepository->find($id);
         return response()->json($comment, Response::HTTP_OK);
     }
 
-    public function update(UpdateRequest $request, string $id)
+    public function update(UpdateRequest $request, string $id): JsonResponse
     {
         $result = $this->commentService->update($id, $request->toDto());
         return response()->json($result, Response::HTTP_OK);
     }
 
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
         $this->commentRepository->destroy($id);
         return response()->json('', Response::HTTP_NO_CONTENT);
