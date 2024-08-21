@@ -2,30 +2,43 @@
 
 namespace App\Http\Requests\Api\V1\Post;
 
+use App\DTO\Api\V1\PostDTO;
+use App\Services\V1\PostService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
             'title'       => 'required|string|max:1000',
             'body'        => 'required|string',
             'category_id' => 'nullable|numeric|exists:categories,id',
+            'publish'     => 'nullable|boolean',
             'publish_at'  => 'nullable|date_format:Y-m-d H:i:s|after_or_equal:now'
         ];
+    }
+
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'publish' => $this->input('publish', false)
+        ]);
+    }
+
+    public function toDto(): PostDTO
+    {
+        return new PostDTO(
+            title: $this->validated('title'),
+            body: $this->validated('body'),
+            category_id: $this->validated('category_id'),
+            publish: $this->validated('publish'),
+            publish_at: $this->validated('publish_at')
+        );
     }
 }

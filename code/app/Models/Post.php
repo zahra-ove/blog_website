@@ -19,18 +19,22 @@ class Post extends Model
     protected $fillable = [
         'title',
         'body',
-        'author_id',
         'category_id',
+        'publish',
         'publish_at'
     ];
 
     protected $casts = [
-        'published' => 'boolean'
+        'publish' => 'boolean'
     ];
 
     protected static function booted(): void
     {
         static::creating(function(Post $post) {
+            $post->slug = Str::slug($post->title . '-' . $post->author?->first_name . '-' . $post->author?->last_name);
+        });
+
+        static::updating(function(Post $post) {
             $post->slug = Str::slug($post->title . '-' . $post->author?->first_name . '-' . $post->author?->last_name);
         });
     }

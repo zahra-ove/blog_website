@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
@@ -16,7 +13,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique()->nullable();
             $table->text('body')->nullable();
-            $table->boolean('published')->default(false)->comment('this comment is published or not');
+            $table->boolean('publish')->default(false)->comment('this post should be publish or not');
 
             $table->unsignedBigInteger('author_id')->nullable();
             $table->unsignedInteger('category_id')->nullable();

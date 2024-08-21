@@ -2,8 +2,10 @@
 
 namespace App\Services\V1;
 
+use App\DTO\Api\V1\PostDTO;
 use App\Exceptions\CustomResourceException;
 use App\Repositories\V1\contracts\PostRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class PostService
 {
@@ -11,7 +13,18 @@ class PostService
     {
     }
 
-    public function update(int $id, array $data)
+    public function store(PostDTO $postData)
+    {
+        return $this->postRepository->store([
+            'title' => htmlspecialchars($postData->title),
+            'body'  => htmlspecialchars($postData->body),
+            'published' => $postData->published,
+            'author_id' => Auth::user()?->id,
+            'category_id' => $postData->category_id
+        ]);
+    }
+
+    public function update(int $id, PostDTO $postData)
     {
         $post = $this->postRepository->find($id);
         if(isset($data['publish_at'])) {
@@ -20,6 +33,6 @@ class PostService
             }
         }
 
-        return $this->postRepository->update($id, $data);
+        return $this->postRepository->update($id, $postData);
     }
 }

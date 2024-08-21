@@ -10,8 +10,8 @@ use App\Http\Resources\Api\V1\CommentResource;
 use App\Repositories\V1\contracts\CommentRepositoryInterface;
 use App\Services\V1\CommentService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class CommentController extends Controller
 {
@@ -27,40 +27,46 @@ class CommentController extends Controller
             ? new CommentCollection($this->commentRepository->paginate(relations: $includes))
             : CommentResource::collection($this->commentRepository->all(relations: $includes));
 
-        return response()->json($resource, 200);
+        return response()->json($resource, HttpResponse::HTTP_OK);
     }
 
     public function store(StoreRequest $request): JsonResponse
     {
         $comment = $this->commentService->store($request->toDto());
-        return response()->json($comment, Response::HTTP_CREATED);
+        return response()->json($comment, HttpResponse::HTTP_CREATED);
     }
 
     public function show(string $id): JsonResponse
     {
         $comment = $this->commentRepository->find($id);
-        return response()->json($comment, Response::HTTP_OK);
+        return response()->json($comment, HttpResponse::HTTP_OK);
     }
 
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
         $result = $this->commentService->update($id, $request->toDto());
-        return response()->json($result, Response::HTTP_OK);
+        return response()->json($result, HttpResponse::HTTP_OK);
     }
 
-    public function destroy(string $id): JsonResponse
+    public function destroy(string $id): Response
     {
         $this->commentRepository->destroy($id);
-        return response()->json('', Response::HTTP_NO_CONTENT);
+        return response('', HttpResponse::HTTP_NO_CONTENT);
     }
 
-    public function confirm(int $id): bool
+    public function confirm(int $id): JsonResponse
     {
-        return $this->commentRepository->confirm($id);
+        return response()->json(
+            $this->commentRepository->confirm($id),
+            HttpResponse::HTTP_OK
+        );
     }
 
-    public function reject(int $id): bool
+    public function reject(int $id): JsonResponse
     {
-        return $this->commentRepository->reject($id);
+        return response()->json(
+            $this->commentRepository->reject($id),
+            HttpResponse::HTTP_OK
+        );
     }
 }

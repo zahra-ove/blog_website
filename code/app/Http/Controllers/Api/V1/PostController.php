@@ -9,7 +9,8 @@ use App\Http\Resources\Api\V1\PostCollection;
 use App\Repositories\V1\contracts\PostRepositoryInterface;
 use App\Services\V1\PostService;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class PostController extends Controller
 {
@@ -27,30 +28,30 @@ class PostController extends Controller
             : $this->postRepository->all(relations: $includes);
 
         $resource = new PostCollection($posts);
-        return response()->json($resource, Response::HTTP_OK);
+        return response()->json($resource, HttpResponse::HTTP_OK);
     }
 
     public function store(StoreRequest $request): JsonResponse
     {
-        $post = $this->postRepository->store($request->validated());
-        return response()->json($post, Response::HTTP_CREATED);
+        $post = $this->postService->store($request->toDto());
+        return response()->json($post, HttpResponse::HTTP_CREATED);
     }
 
     public function show(int $id): JsonResponse
     {
         $post = $this->postRepository->find($id);
-        return response()->json($post, Response::HTTP_OK);
+        return response()->json($post, HttpResponse::HTTP_OK);
     }
 
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
-        $result = $this->postService->update($id, $request->validated());
-        return response()->json($result, Response::HTTP_OK);
+        $result = $this->postService->update($id, $request->toDto());
+        return response()->json($result, HttpResponse::HTTP_OK);
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(int $id): Response
     {
         $this->postRepository->destroy($id);
-        return response()->json('', Response::HTTP_NO_CONTENT);
+        return response(null,HttpResponse::HTTP_NO_CONTENT);
     }
 }
