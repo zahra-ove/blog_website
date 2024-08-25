@@ -10,15 +10,10 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CategoryFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word,
+            'name' => $this->faker->unique()->word,
             'slug' => $this->faker->unique()->slug,
             'category_id' => Category::inRandomOrder()->first()->id ?? null, // Assumes a parent category is also created
             'created_at'  => now(),

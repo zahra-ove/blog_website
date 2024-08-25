@@ -36,4 +36,9 @@ docker-compose down
 ## to create a contorller as api controller with its form requests:
     `php artisan make:controller --api --requests`
 
+## for dropping all tables and again creating them and seeding them:
+    `php artisan migrate:fresh --seed`
+
+
+
 

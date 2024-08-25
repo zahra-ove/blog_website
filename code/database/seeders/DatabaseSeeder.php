@@ -28,7 +28,8 @@ class DatabaseSeeder extends Seeder
             $this->call([
                 CategorySeeder::class,
                 PostSeeder::class,
-                CommentSeeder::class
+                CommentSeeder::class,
+                TagSeeder::class,
             ]);
 
             // enable FK check
