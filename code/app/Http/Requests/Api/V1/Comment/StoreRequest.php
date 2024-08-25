@@ -17,7 +17,7 @@ class StoreRequest extends FormRequest
         return [
             'body'       => 'required|string|max:10000',
             'post_id'    => 'required|numeric|exists:posts,id',
-            'comment_id' => 'required|numeric|exists:comments,id'
+            'comment_id' => 'nullable|numeric|exists:comments,id'
         ];
     }
 
@@ -25,7 +25,6 @@ class StoreRequest extends FormRequest
     {
         return new CommentDTO(
             body: $this->validated('body'),
-            user_id: $this->validated('user_id'),
             post_id: $this->validated('post_id'),
             comment_id: $this->validated('comment_id')
         );

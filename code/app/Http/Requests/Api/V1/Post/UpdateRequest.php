@@ -19,7 +19,10 @@ class UpdateRequest extends FormRequest
             'body'        => 'nullable|string',
             'category_id' => 'nullable|numeric|exists:categories,id',
             'publish'     => 'nullable|bool',
-            'publish_at'  => 'nullable|string|after_or_equal:now'
+            'publish_at'  => 'nullable|string|after_or_equal:now',
+
+            'tag_ids'     => 'nullable|array',
+            'tag_ids.*'   => 'integer|exists:tags,id',
         ];
     }
 
@@ -30,7 +33,7 @@ class UpdateRequest extends FormRequest
             body: $this->validated('body'),
             category_id: $this->validated('category_id'),
             publish: $this->validated('publish'),
-            publish_at: $this->validated('publish_at')
+            publish_at: $this->validated('publish_at'),
         );
     }
 }

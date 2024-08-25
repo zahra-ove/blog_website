@@ -10,6 +10,9 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $table = 'tags';
+    protected $fillable = ['name'];
+
     public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'post_tags')->withPivot('created_at');

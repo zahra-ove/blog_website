@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('slug')->unique()->nullable();
             $table->text('body')->nullable();
             $table->boolean('publish')->default(false)->comment('this post should be publish or not');
+            $table->enum('status', ['pending', 'confirmed', 'rejected'])->default('pending')->comment('defines status of post. is it confirmed by admin or rejected or is in pending status');
 
             $table->unsignedBigInteger('author_id')->nullable();
             $table->unsignedInteger('category_id')->nullable();

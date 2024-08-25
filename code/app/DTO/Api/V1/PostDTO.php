@@ -6,8 +6,8 @@ use DateTime;
 
 readonly class PostDTO
 {
-    public function __construct(string $title, null|string $body,
-                                null|int $category_id, bool $publish, DateTime $publish_at)
+    public function __construct(public string $title, public null|string $body,
+        public null|int $category_id, public bool $publish, public DateTime $publish_at)
     {
     }
 }

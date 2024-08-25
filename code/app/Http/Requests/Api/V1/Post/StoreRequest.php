@@ -20,7 +20,10 @@ class StoreRequest extends FormRequest
             'body'        => 'required|string',
             'category_id' => 'nullable|numeric|exists:categories,id',
             'publish'     => 'nullable|boolean',
-            'publish_at'  => 'nullable|date_format:Y-m-d H:i:s|after_or_equal:now'
+            'publish_at'  => 'nullable|date_format:Y-m-d H:i:s|after_or_equal:now',
+
+            'tag_ids'     => 'nullable|array',
+            'tag_ids.*'   => 'integer|exists:tags,id',
         ];
     }
 
@@ -38,7 +41,7 @@ class StoreRequest extends FormRequest
             body: $this->validated('body'),
             category_id: $this->validated('category_id'),
             publish: $this->validated('publish'),
-            publish_at: $this->validated('publish_at')
+            publish_at: $this->validated('publish_at'),
         );
     }
 }
