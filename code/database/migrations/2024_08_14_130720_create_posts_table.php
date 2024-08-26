@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            $table->string('title', 255);
             $table->string('slug')->unique()->nullable();
             $table->text('body')->nullable();
             $table->boolean('publish')->default(false)->comment('this post should be publish or not');

@@ -27,7 +27,10 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->renderable(function (CustomResourceException $e) {
             return response()->json([
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
+                'details' => app()->environment('local')
+                    ? [$e->getMessage(), get_class($e) ]
+                    : [],
             ], 422);
         });
 

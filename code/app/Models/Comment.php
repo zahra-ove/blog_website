@@ -15,6 +15,10 @@ class Comment extends Model
     protected $table = 'comments';
     protected $fillable = ['body', 'user_id', 'post_id', 'comment_id'];
 
+    const string CONFIRMED ='confirmed';
+    const string REJECTED ='rejected';
+    const string PENDING ='pending';
+
     /***************************************************************************
      *                                                                         *
      *                             Model Relationships                         *

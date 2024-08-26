@@ -16,14 +16,16 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'       => 'required|string|max:255',
+            'title'       => 'required|string|max:255|unique:posts,title',
             'body'        => 'required|string',
             'category_id' => 'nullable|numeric|exists:categories,id',
             'publish'     => 'nullable|boolean',
             'publish_at'  => 'nullable|date_format:Y-m-d H:i:s|after_or_equal:now',
 
             'tag_ids'     => 'nullable|array',
-            'tag_ids.*'   => 'integer|exists:tags,id',
+            'tag_ids.*'   => 'numeric|exists:tags,id',
+            'tags'        => 'nullable|array',
+            'tags.*'      => 'required|string|max:100|unique:tags,name'
         ];
     }
 

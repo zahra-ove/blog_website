@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api\V1\Post;
 
 use App\DTO\Api\V1\PostDTO;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -15,15 +16,24 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'       => 'nullable|string|max:255',
+            'title'       => ['nullable', 'string', 'max:255', Rule::unique('posts', 'title')->ignore($this->id)],
             'body'        => 'nullable|string',
             'category_id' => 'nullable|numeric|exists:categories,id',
             'publish'     => 'nullable|bool',
             'publish_at'  => 'nullable|string|after_or_equal:now',
 
             'tag_ids'     => 'nullable|array',
-            'tag_ids.*'   => 'integer|exists:tags,id',
+            'tag_ids.*'   => 'numeric|exists:tags,id',
+            'tags'        => 'nullable|array',
+            'tags.*'      => 'required|string|max:100|unique:tags,name'
         ];
+    }
+
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'publish' => $this->input('publish', false)
+        ]);
     }
 
     public function toDto(): PostDTO

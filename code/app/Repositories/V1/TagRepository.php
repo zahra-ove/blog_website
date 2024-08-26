@@ -12,4 +12,15 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface
     {
         parent::__construct($tag);
     }
+
+    public function insertMany(array $tags): array
+    {
+        $tag_ids = [];
+        foreach($tags as $tag) {
+            $tag = Tag::query()->create(['name' => $tag]);
+            $tag_ids[] = $tag['id'];
+        }
+
+        return $tag_ids;
+    }
 }

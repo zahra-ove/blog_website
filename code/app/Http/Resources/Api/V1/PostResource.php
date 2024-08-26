@@ -24,6 +24,7 @@ class PostResource extends JsonResource
                 'comments' => CommentResource::collection($this->whenLoaded('comments')),
                 'author'   => new UserResource($this->whenLoaded('author')),
                 'category' => new CategoryResource($this->whenLoaded('category')),
+                'tags'     => TagResource::collection($this->whenLoaded('tags'))
             ],
             'includes'      => [],
             'links'         => [

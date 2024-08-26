@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class Post extends Model
@@ -19,6 +20,7 @@ class Post extends Model
     protected $with = ['author'];
     protected $fillable = [
         'title',
+        'slug',
         'body',
         'category_id',
         'publish',
@@ -31,12 +33,15 @@ class Post extends Model
 
     protected static function booted(): void
     {
-        static::creating(function(Post $post) {
-            $post->slug = Str::slug($post->title . '-' . $post->author?->first_name . '-' . $post->author?->last_name);
-        });
+//        static::creating(function(Post $post) {
+//            $post->slug = Str::slug($post->title . '-' . $post->author?->first_name . '-' . $post->author?->last_name);
+//        });
 
-        static::updating(function(Post $post) {
-            $post->slug = Str::slug($post->title . '-' . $post->author?->first_name . '-' . $post->author?->last_name);
+        static::saving(function(Post $post) {
+            if($post->isDirty('title')) {
+                Log::info('is dirsty');
+                $post->slug = Str::slug($post->title . '-' . $post->author?->first_name . '-' . $post->author?->last_name);
+            }
         });
     }
 

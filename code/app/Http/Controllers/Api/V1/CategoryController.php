@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\Api\V1\Category\StoreRequest;
 use App\Http\Requests\Api\V1\Category\UpdateRequest;
+use App\Http\Resources\Api\V1\CategoryCollection;
 use App\Http\Resources\Api\V1\CategoryResource;
 use App\Repositories\V1\contracts\CategoryRepositoryInterface;
 use App\Services\V1\CategoryService;
@@ -20,11 +21,12 @@ class CategoryController extends ApiController
 
     public function index(): JsonResponse
     {
-        $categories = request()->has('paginated')
-            ? $this->categoryRepository->paginate()
-            : $this->categoryRepository->all();
+        $includes = request()->has('include') ? explode(',', request()->query('include')) : [];
 
-        $resource = CategoryResource::collection($categories);
+        $resource = request()->has('paginated')
+            ? new CategoryCollection($this->categoryRepository->paginate(relations: $includes))
+            : CategoryResource::collection($this->categoryRepository->all(relations: $includes));
+
         return response()->json($resource, HttpResponse::HTTP_OK);
     }
 
@@ -34,7 +36,7 @@ class CategoryController extends ApiController
         return response()->json($category, HttpResponse::HTTP_CREATED);
     }
 
-    public function findById(int $id): JsonResponse
+    public function show(int $id): JsonResponse
     {
         $category = $this->categoryRepository->find($id);
         return response()->json($category, HttpResponse::HTTP_OK);

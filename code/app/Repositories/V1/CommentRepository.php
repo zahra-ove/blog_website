@@ -14,19 +14,11 @@ class CommentRepository extends BaseRepository implements CommentRepositoryInter
 
     public function confirm(int $id): bool
     {
-        $comment = Comment::firstOrFail($id);
-
-        return $comment->update([
-            'confirmed' => 'confirmed'
-        ]);
+        return Comment::where('id', $id)->update(['confirmed' => Comment::CONFIRMED]);
     }
 
     public function reject(int $id): bool
     {
-        $comment = Comment::firstOrFail($id);
-
-        return $comment->update([
-            'confirmed' => 'rejected'
-        ]);
+        return Comment::where('id', $id)->update(['confirmed' => Comment::REJECTED]);
     }
 }
