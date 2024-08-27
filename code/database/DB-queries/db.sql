@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS tags (
 DROP TABLE IF EXISTS post_tags;
 CREATE TABLE IF NOT EXISTS tags (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    post_id BIGINT UNSIGNED,
+    post_id INT UNSIGNED,
     tag_id INT UNSIGNED,
 
     created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS tags (
 
 DROP TABLE IF EXISTS posts;
 CREATE TABLE IF NOT EXISTS posts (
-    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(500),
     body TEXT,
     author_id BIGINT UNSIGNED,
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS comments (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     body TEXT,
     user_id BIGINT UNSIGNED,
-    post_id BIGINT UNSIGNED NOT NULL,
+    post_id INT UNSIGNED NOT NULL,
     cofirmed ENUM('0', '1') DEFAULT '0',
     comment_id BIGINT UNSIGNED,
 
@@ -87,7 +87,7 @@ DROP TABLE IF EXISTS likes;
 CREATE TABLE IF NOT EXISTS likes (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT UNSIGNED,
-    post_id BIGINT UNSIGNED,
+    post_id INT UNSIGNED,
 
     INDEX like_user_indx (user_id),
     INDEX like_post_indx (post_id),
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS likes (
 DROP TABLE IF EXISTS media;
 CREATE TABLE IF NOT EXISTS media (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    post_id BIGINT UNSIGNED,
+    post_id INT UNSIGNED,
     type enum('image', 'video', 'audio'),
 
     created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS media (
 DROP TABLE IF EXISTS saves;
 CREATE TABLE IF NOT EXISTS saves (    -- saved posts (each user can save each post in his/her profile for later read)
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    post_id BIGINT UNSIGNED,
+    items TEXT,  -- all post_ids which are stored as a json array ---> like [{post_id:1, category_id:2, directory_name:'some name for soldering the posts. something like instagram'}, {}, {}]
     user_id BIGINT UNSIGNED,
 
     created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,

@@ -47,7 +47,7 @@ class PostService
             DB::rollBack();
 
             Log::error('storing post failed!!', ['message' => $e->getMessage()]);
-            Throw new CustomResourceException("creating post with tags failed");
+            throw new CustomResourceException("creating post with tags failed");
         }
     }
 

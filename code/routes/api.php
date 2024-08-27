@@ -16,6 +16,7 @@ Route::middleware([])->prefix('v1')->as('v1:')->group(function(){
     require base_path('routes/api/v1/posts.php');
     require base_path('routes/api/v1/comments.php');
     require base_path('routes/api/v1/tags.php');
+    require base_path('routes/api/v1/saved_posts.php');
 });
 
 

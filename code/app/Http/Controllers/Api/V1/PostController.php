@@ -44,7 +44,6 @@ class PostController extends Controller
         return response()->json(new PostResource($post), HttpResponse::HTTP_OK);
     }
 
-    //@TODO
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
         $result = $this->postService->update($id, $request->toDto(), $request->validated('tag_ids'), $request->validated('tags'));
