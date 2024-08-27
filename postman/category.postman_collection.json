@@ -16,6 +16,31 @@
 			"response": []
 		},
 		{
+			"name": "all with relationships",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/api/v1/categories?include=posts,category,categories",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"categories"
+					],
+					"query": [
+						{
+							"key": "include",
+							"value": "posts,category,categories"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "paginate",
 			"request": {
 				"method": "GET",
@@ -53,7 +78,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"cat1\"\r\n}",
+					"raw": "{\r\n    \"name\": \"cat6789\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -113,7 +138,7 @@
 			"response": []
 		},
 		{
-			"name": "findById",
+			"name": "show",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -135,7 +160,7 @@
 						}
 					}
 				},
-				"url": "{{domain}}/api/v1/categories/200"
+				"url": "{{domain}}/api/v1/categories/26"
 			},
 			"response": []
 		},
@@ -162,7 +187,7 @@
 						}
 					}
 				},
-				"url": "{{domain}}/api/v1/categories/expedita-consequatur"
+				"url": "{{domain}}/api/v1/categories/find-by-slug/cat6789"
 			},
 			"response": []
 		}

@@ -22,6 +22,26 @@
 						"type": "text"
 					}
 				],
+				"url": "{{domain}}/api/v1/posts"
+			},
+			"response": []
+		},
+		{
+			"name": "all with relationships",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "{{domain}}/api/v1/posts?include=category,author",
 					"host": [
@@ -83,7 +103,24 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{domain}}/api/v1/posts/1"
+				"url": {
+					"raw": "{{domain}}/api/v1/posts/28?include=tags,comments",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"posts",
+						"28"
+					],
+					"query": [
+						{
+							"key": "include",
+							"value": "tags,comments"
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -99,13 +136,44 @@
 					}
 				],
 				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"post1\",\r\n    \"body\": \"body1\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "first article37",
+							"type": "text"
+						},
+						{
+							"key": "body",
+							"value": "hi. this is body37",
+							"type": "text"
+						},
+						{
+							"key": "tag_ids[]",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "tag_ids[]",
+							"value": "6",
+							"type": "text"
+						},
+						{
+							"key": "tags[]",
+							"value": "sample tag567",
+							"type": "text"
+						},
+						{
+							"key": "tags[]",
+							"value": "sample tag587",
+							"type": "text"
+						},
+						{
+							"key": "category_id",
+							"value": "3",
+							"type": "text"
 						}
-					}
+					]
 				},
 				"url": "{{domain}}/api/v1/posts"
 			},
@@ -114,7 +182,7 @@
 		{
 			"name": "update",
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "accept",
@@ -123,15 +191,26 @@
 					}
 				],
 				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"post1\",\r\n    \"body\": \"body1\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "title1 after updating123456jtyj",
+							"type": "text"
+						},
+						{
+							"key": "body",
+							"value": "body 1 after updating12345678",
+							"type": "text"
+						},
+						{
+							"key": "category_id",
+							"value": "4",
+							"type": "text"
 						}
-					}
+					]
 				},
-				"url": "{{domain}}/api/v1/posts"
+				"url": "{{domain}}/api/v1/posts/13"
 			},
 			"response": []
 		},
@@ -140,7 +219,7 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "{{domain}}/api/v1/posts/1"
+				"url": "{{domain}}/api/v1/posts/12"
 			},
 			"response": []
 		}
