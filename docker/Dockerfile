@@ -33,8 +33,8 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 COPY ./docker/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 # Expose port 80
-ARG DEFAULT_HTTP_POSRT=80
-EXPOSE $DEFAULT_HTTP_POSRT
+ARG DEFAULT_HTTP_PORT=80
+EXPOSE $DEFAULT_HTTP_PORT
 
 # Start Apache in the foreground
 CMD ["apache2-foreground"]
